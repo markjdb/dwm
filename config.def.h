@@ -2,9 +2,9 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-1";
+	"-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-*";
 };
-static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-1";
+static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-*";
 static const char normbordercolor[] = "#2D2D2D";
 static const char normbgcolor[]     = "#662066";
 static const char normfgcolor[]     = "#6A99C7";
@@ -18,7 +18,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
 #define MAX_TAGLEN 16
-static const char tags[][MAX_TAGLEN] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static char tags[][MAX_TAGLEN] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -55,7 +55,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-1", "-e", "screen -R", NULL };
+static const char *termcmd[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*", "-e", "screen -R", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */

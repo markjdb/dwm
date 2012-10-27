@@ -1213,20 +1213,24 @@ movemouse(const Arg *arg)
 void
 nametag(const Arg *arg) {
 	char *cp, name[MAX_TAGLEN];
+	size_t namelen;
 	FILE *fp;
 	int i;
 
-	if(!(fp = (FILE*)popen("echo -n | dmenu", "r")))
+	if(!(fp = (FILE*)popen("echo -n | dmenu", "r"))) {
 		fprintf(stderr, "dwm: Could not popen 'echo -n | dmenu'\n");
-	cp = fgets(name, MAX_TAGLEN, fp);
+		return;
+	}
+	cp = fgets(name, sizeof(name), fp);
 	pclose(fp);
 	if(cp == NULL)
 		return;
-	cp[strlen(cp) - 1] = '\0';
+	if((namelen = strlen(name)) > 0)
+		name[namelen - 1] = '\0';
 
 	for(i = 0; i < LENGTH(tags); i++)
 		if(selmon->tagset[selmon->seltags] & (1 << i))
-			memcpy(tags[i], name, MAX_TAGLEN);
+			memcpy(tags[i], name, sizeof(name));
 	drawbars();
 }
 
