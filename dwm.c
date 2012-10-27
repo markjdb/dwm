@@ -184,6 +184,7 @@ static void maprequest(XEvent *e);
 static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
+static void nametag(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void pop(Client *);
 static void propertynotify(XEvent *e);
@@ -1207,6 +1208,26 @@ movemouse(const Arg *arg)
 		selmon = m;
 		focus(NULL);
 	}
+}
+
+void
+nametag(const Arg *arg) {
+	char *cp, name[MAX_TAGLEN];
+	FILE *fp;
+	int i;
+
+	if(!(fp = (FILE*)popen("echo -n | dmenu", "r")))
+		fprintf(stderr, "dwm: Could not popen 'echo -n | dmenu'\n");
+	cp = fgets(name, MAX_TAGLEN, fp);
+	pclose(fp);
+	if(cp == NULL)
+		return;
+	cp[strlen(cp) - 1] = '\0';
+
+	for(i = 0; i < LENGTH(tags); i++)
+		if(selmon->tagset[selmon->seltags] & (1 << i))
+			memcpy(tags[i], name, MAX_TAGLEN);
+	drawbars();
 }
 
 Client *
