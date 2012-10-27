@@ -2,22 +2,23 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"monospace:size=10"
+	"-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-1";
 };
-static const char dmenufont[]       = "monospace:size=10";
-static const char normbordercolor[] = "#444444";
-static const char normbgcolor[]     = "#222222";
-static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#005577";
-static const char selbgcolor[]      = "#005577";
-static const char selfgcolor[]      = "#eeeeee";
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-1";
+static const char normbordercolor[] = "#2D2D2D";
+static const char normbgcolor[]     = "#662066";
+static const char normfgcolor[]     = "#6A99C7";
+static const char selbordercolor[]  = "#FF0000";
+static const char selbgcolor[]      = "#7B277C";
+static const char selfgcolor[]      = "#FFF8FF";
+static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+#define MAX_TAGLEN 16
+static char tags[][MAX_TAGLEN] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -53,9 +54,8 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *termcmd[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-1", "-e", "screen -R", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
