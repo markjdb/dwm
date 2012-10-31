@@ -51,6 +51,9 @@
                                * MAX(0, MIN((y)+(h),(m)->wy+(m)->wh) - MAX((y),(m)->wy)))
 #define ISVISIBLE(C)            ((C->tags & C->mon->tagset[C->mon->seltags]))
 #define LENGTH(X)               (sizeof X / sizeof X[0])
+#define MALLOCERR(s)            die("fatal: could not malloc %u bytes\n", (s))
+#define MAX(A, B)               ((A) > (B) ? (A) : (B))
+#define MIN(A, B)               ((A) < (B) ? (A) : (B))
 #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
 #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
@@ -122,8 +125,9 @@ struct Monitor {
 	unsigned int seltags;
 	unsigned int sellt;
 	unsigned int tagset[2];
-	int showbar;
-	int topbar;
+	char **tags;
+	Bool showbar;
+	Bool topbar;
 	Client *clients;
 	Client *sel;
 	Client *stack;
@@ -641,9 +645,17 @@ Monitor *
 createmon(void)
 {
 	Monitor *m;
+	int i;
 
 	m = ecalloc(1, sizeof(Monitor));
 	m->tagset[0] = m->tagset[1] = 1;
+	if(!(m->tags = malloc(LENGTH(tags) * sizeof(*m->tags))))
+		MALLOCERR(LENGTH(tags) * sizeof(*m->tags));
+	for(i = 0; i < LENGTH(tags); i++) {
+		if(!(m->tags[i] = malloc(MAX_TAGLEN)))
+			MALLOCERR(MAX_TAGLEN);
+		memcpy(m->tags[i], tags[i], MAX_TAGLEN);
+	}
 	m->mfact = mfact;
 	m->nmaster = nmaster;
 	m->showbar = showbar;
@@ -718,9 +730,9 @@ drawbar(Monitor *m)
 	}
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
-		w = TEXTW(tags[i]);
+		w = TEXTW(m->tags[i]);
 		drw_setscheme(drw, m->tagset[m->seltags] & 1 << i ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, tags[i], urg & 1 << i);
+		drw_text(drw, x, 0, w, bh, m->tags[i], urg & 1 << i);
 		drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
 		           occ & 1 << i, urg & 1 << i);
 		x += w;
@@ -1230,7 +1242,7 @@ nametag(const Arg *arg) {
 
 	for(i = 0; i < LENGTH(tags); i++)
 		if(selmon->tagset[selmon->seltags] & (1 << i))
-			memcpy(tags[i], name, sizeof(name));
+			memcpy(selmon->tags[i], name, sizeof(name));
 	drawbars();
 }
 
@@ -1880,8 +1892,8 @@ updategeom(void)
 		for (n = 0, m = mons; m; m = m->next, n++);
 		/* only consider unique geometries as separate screens */
 		unique = ecalloc(nn, sizeof(XineramaScreenInfo));
-		for (i = 0, j = 0; i < nn; i++)
-			if (isuniquegeom(unique, j, &info[i]))
+		for(i = 0, j = 0; i < nn; i++)
+			if(isuniquegeom(unique, j, &info[i]))
 				memcpy(&unique[j++], &info[i], sizeof(XineramaScreenInfo));
 		XFree(info);
 		nn = j;
