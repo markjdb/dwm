@@ -807,13 +807,17 @@ expose(XEvent *e)
 void
 focus(Client *c)
 {
-	if (!c || !ISVISIBLE(c))
-		for (c = selmon->stack; c && !ISVISIBLE(c); c = c->snext);
-	/* was if (selmon->sel) */
-	if (selmon->sel && selmon->sel != c)
-		unfocus(selmon->sel, 0);
-	if (c) {
-		if (c->mon != selmon)
+	if(!c || !ISVISIBLE(c)) {
+		for(c = selmon->stack; c &&
+		    !(ISVISIBLE(c) && c->tags == selmon->tagset[selmon->seltags]);
+		    c = c->snext);
+		if (!c) for(c = selmon->stack; c && !ISVISIBLE(c); c = c->snext);
+	}
+	/* was if(selmon->sel) */
+	if(selmon->sel && selmon->sel != c)
+		unfocus(selmon->sel, False);
+	if(c) {
+		if(c->mon != selmon)
 			selmon = c->mon;
 		if (c->isurgent)
 			clearurgent(c);
