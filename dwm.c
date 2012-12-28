@@ -1238,7 +1238,7 @@ nametag(const Arg *arg) {
 	}
 	cp = fgets(name, sizeof(name), fp);
 	pclose(fp);
-	if(cp == NULL || name[0] == '\0')
+	if(cp == NULL || name[0] == '\n' || name[0] == '\0')
 		return;
 	name[strlen(name) - 1] = '\0';
 
