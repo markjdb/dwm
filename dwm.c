@@ -1229,7 +1229,6 @@ movemouse(const Arg *arg)
 void
 nametag(const Arg *arg) {
 	char *cp, name[MAX_TAGLEN];
-	size_t namelen;
 	FILE *fp;
 	int i;
 
@@ -1239,10 +1238,9 @@ nametag(const Arg *arg) {
 	}
 	cp = fgets(name, sizeof(name), fp);
 	pclose(fp);
-	if(cp == NULL)
+	if(cp == NULL || name[0] == '\0')
 		return;
-	if((namelen = strlen(name)) > 0)
-		name[namelen - 1] = '\0';
+	name[strlen(name) - 1] = '\0';
 
 	for(i = 0; i < LENGTH(tags); i++)
 		if(selmon->tagset[selmon->seltags] & (1 << i))
