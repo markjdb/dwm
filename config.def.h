@@ -18,7 +18,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
 #define MAX_TAGLEN 16
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "irc", "mail", "www" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -56,11 +56,13 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*", "-e", "screen -R", NULL };
+static const char *termcmdns[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = termcmdns } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
