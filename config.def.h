@@ -26,8 +26,9 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Gimp",     NULL,       NULL,       0,            1,		-1 },
+	{ "Firefox",  NULL,       NULL,       1 << 8,       0,		-1 },
+	{ "Thunderbird", NULL,    NULL,       1 << 7,       0,		-1 },
 };
 
 /* layout(s) */
@@ -55,14 +56,16 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *gvimcmd[] = { "gvim", NULL };
+static const char *i3lockcmd[] = { "i3lock", "-c", "000000", NULL };
 static const char *termcmd[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*", "-e", "TERM=screen-256color tmux", NULL };
-static const char *termcmdns[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*", NULL };
+static const char *termcmdnt[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = termcmdns } },
+	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = termcmdnt } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -85,6 +88,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_n,      nametag,        {0} },
+	{ MODKEY,                       XK_g,      spawn,          {.v = gvimcmd} },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = i3lockcmd} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
