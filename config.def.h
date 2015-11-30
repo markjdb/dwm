@@ -2,9 +2,9 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-*",
+	"terminus:size=12",
 };
-static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-*";
+static const char dmenufont[]       = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-*";
 static const char normbordercolor[] = "#2D2D2D";
 static const char normbgcolor[]     = "#662066";
 static const char normfgcolor[]     = "#6A99C7";
@@ -56,7 +56,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *gvimcmd[] = { "gvim", NULL };
 static const char *i3lockcmd[] = { "i3lock", "-c", "000000", NULL };
 static const char *termcmd[]  = { "uxterm", "-e", "TERM=screen-256color tmux", NULL };
