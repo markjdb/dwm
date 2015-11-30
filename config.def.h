@@ -2,7 +2,7 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-*";
+	"-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-*",
 };
 static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-*";
 static const char normbordercolor[] = "#2D2D2D";
@@ -55,6 +55,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *gvimcmd[] = { "gvim", NULL };
 static const char *i3lockcmd[] = { "i3lock", "-c", "000000", NULL };
