@@ -58,8 +58,8 @@ static const Layout layouts[] = {
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *gvimcmd[] = { "gvim", NULL };
 static const char *i3lockcmd[] = { "i3lock", "-c", "000000", NULL };
-static const char *termcmd[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*", "-e", "TERM=screen-256color tmux", NULL };
-static const char *termcmdnt[]  = { "uxterm", "-fg", "white", "-bg", "black", "-fn", "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso10646-*", NULL };
+static const char *termcmd[]  = { "uxterm", "-e", "TERM=screen-256color tmux", NULL };
+static const char *termcmdnt[]  = { "uxterm", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
