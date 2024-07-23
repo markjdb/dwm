@@ -654,7 +654,8 @@ createmon(void)
 	for(i = 0; i < LENGTH(tags); i++) {
 		if(!(m->tags[i] = malloc(MAX_TAGLEN)))
 			MALLOCERR(MAX_TAGLEN);
-		memcpy(m->tags[i], tags[i], MAX_TAGLEN);
+		strncpy(m->tags[i], tags[i], MAX_TAGLEN);
+		m->tags[i][MAX_TAGLEN - 1] = '\0';
 	}
 	m->mfact = mfact;
 	m->nmaster = nmaster;
